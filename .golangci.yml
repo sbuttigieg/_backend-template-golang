@@ -1,0 +1,123 @@
+version: "2"
+run:
+  go: '1.24.4'
+linters:
+  default: none
+  enable:
+    - copyloopvar
+    - dogsled
+    - dupl
+    - errcheck
+    - exhaustive
+    - funlen
+    - gochecknoinits
+    - goconst
+    - gocritic
+    - gocyclo
+    - goprintffuncname
+    - gosec
+    - govet
+    - ineffassign
+    - lll
+    - misspell
+    - mnd
+    - nakedret
+    - nolintlint
+    - revive
+    - unconvert 
+    - whitespace
+  settings:
+    dupl:
+      threshold: 100
+    exhaustive:
+      default-signifies-exhaustive: false
+    funlen:
+      lines: 100
+      statementss: 50
+    goconst:
+      min-len: 2
+      min-occurrences: 2
+    gocritic:
+      disabled-checks:
+        - dupImport
+        - ifElseChain
+        - octalLiteral
+        - whyNoLint
+        - wrapperFunc
+        - paramTypeCombine
+      enabled-tags:
+        - diagnostic
+        - experimental
+        - opinionated
+        - performance
+        - style
+    gocyclo:
+      min-complexity: 15
+    govet:
+      enable:
+        - shadow
+      settings:
+        printf:
+          funcs:
+            - (github.com/golangci/golangci-lint/pkg/logutils.Log).Infof
+            - (github.com/golangci/golangci-lint/pkg/logutils.Log).Warnf
+            - (github.com/golangci/golangci-lint/pkg/logutils.Log).Errorf
+            - (github.com/golangci/golangci-lint/pkg/logutils.Log).Fatalf
+    lll:
+      line-length: 140
+    misspell:
+      locale: UK
+    mnd:
+      checks:
+        - argument
+        - case
+        - condition
+        - return
+    nolintlint:
+      require-explanation: false
+      require-specific: false
+      allow-unused: false
+    revive:
+      confidence: 0
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    rules:
+      - linters:
+          - funlen
+          - mnd
+          - revive
+          - goconst
+        path: _test\.go
+      - linters:
+          - gocritic
+        text: 'unnecessaryDefers'
+      - linters:
+          - gosec
+        text: integer overflow conversion
+    paths:
+      - vendor
+      - test/testdata_etc
+      - internal/cache
+      - internal/renameio
+      - internal/robustio
+      - third_party$
+      - builtin$
+      - examples$
+  formatters:
+    enable:
+      - gofmt
+      - goimports   
+    settings:
+      gci:
+        sections:
+         - prefix(github.com/golangci/golangci-lint)
+      goimports:
+        local-prefixes:
+         - github.com/golangci/golangci-lint
+  output:
+    show-stats: true

@@ -1,0 +1,23 @@
+# TODO: replace service name, container_name, dockerfile path and network name with actual values
+networks:
+  backend_template:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 173.77.11.0/24
+
+services:
+  backend_template:
+    container_name: backend_template
+    platform: linux/arm64
+    build:
+      context: $PWD
+      dockerfile: $PWD/zarf/local/backendtemplate/Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - $PWD:/home
+    networks:
+      backend_template:
+        ipv4_address: 173.77.11.2

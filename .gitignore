@@ -1,0 +1,11 @@
+main
+zarf/local/.env
+.vimrc
+tags
+.cache
+.vscode/
+.idea
+.DS_Store
+/*.sh
+*.log
+/fuzz
