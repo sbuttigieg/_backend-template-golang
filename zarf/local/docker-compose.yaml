@@ -9,6 +9,8 @@ networks:
 
 services:
   backend_template:
+    env_file:
+      - .env
     container_name: backend_template
     platform: linux/arm64
     build:
